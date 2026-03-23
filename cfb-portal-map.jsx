@@ -129,7 +129,7 @@ const LBL = {fontSize:8,letterSpacing:3,color:C.muted,textTransform:"uppercase",
 const SEC = (extra={}) => ({padding:"12px 14px",borderBottom:`1px solid ${C.border}`,...extra});
 
 // ── DIVBTN ────────────────────────────────────────────────────────────────────
-function DivBtn({ val, label, active, onClick }) {
+function DivBtn({ label, active, onClick }) {
   return (
     <button onClick={onClick} style={{
       flex:1,padding:"6px 4px",fontSize:9,letterSpacing:2,textTransform:"uppercase",
@@ -165,9 +165,10 @@ export default function PortalFlow() {
   const loadData = (bust = false) => {
     setRefreshing(true);
     const ts = bust ? `?t=${Date.now()}` : "";
+    const base = import.meta.env.BASE_URL;
     Promise.all([
-      fetch(`/data/recruits.json${ts}`).then(r => r.json()),
-      fetch(`/data/transfers.json${ts}`).then(r => r.json()),
+      fetch(`${base}data/recruits.json${ts}`).then(r => r.json()),
+      fetch(`${base}data/transfers.json${ts}`).then(r => r.json()),
     ]).then(([r, t]) => {
       setRecruits(r);
       setTransfers(t);
